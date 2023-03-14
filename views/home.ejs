@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css">
+
+    <title>Chat Bot App</title>
+  </head>
+  <body>
+    <header>
+      <h1>Customer Support App</h1>
+      
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </nav>
+    <main>
+
+      <h3>Talk to an Agent </h3>
+      <h2>Have a complaint? Let's help you find a solution</h2>
+
+      <div id="chat-box"></div>
+
+      <div class="container">
+
+
+    
+    <form id="chat-form">
+          <textarea id="message" name="message" rows="10" cols="75" required></textarea>
+          <button class="btn" type="submit">Send Message</button></div>
+
+</form>
+</div>
+
+
+
+
+
+    
+   
+      <!-- <section>
+        <h2>Get in touch</h2>
+        <form>
+          <label for="name">Name:</label>
+          <!<input type="text" id="name" name="name" required>
+          <label for="email">Email:</label> -->
+          <!-- <input type="email" id="email" name="email" required> -->
+          <!-- <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <input type="submit" value="Send">
+        </form>
+      </section> -->
+
+    </main>
+    <footer>
+      <p>&copy; 2023 Customer Support App</p>
+    </footer>
+  
+
+
+    <script>
+      const chatBox = document.getElementById('chat-box');
+      const chatForm = document.getElementById('chat-form');
+
+      chatForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText).response;
+            const messageElement = document.createElement('p');
+            messageElement.innerText = message;
+            chatBox.appendChild(messageElement);
+            const responseElement = document.createElement('p');
+            responseElement.innerText = response;
+            chatBox.appendChild(responseElement);
+            messageInput.value = '';
+          }
+        };
+        xhr.open('POST', '/chat');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(`message=${message}`);
+      });
+    </script>
+  </body>
+</html>
